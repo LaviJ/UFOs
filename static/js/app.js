@@ -29,3 +29,34 @@ function buildTable(data) {
     );
 });
 }
+
+// Mod 11.5.3 Add Filters
+//handling what to do after an input is given such as button click
+function handleClick() {
+    // Grab the datetime value from the filter
+    let date = d3.select("#datetime").property("value");
+    let filteredData = tableData;
+  
+     // Check to see if a date was entered and filter the
+    // data using that date.
+    if (date) {
+      // Apply `filter` to the table data to only keep the
+      // rows where the `datetime` value matches the filter value
+      filteredData = filteredData.filter(row => row.datetime === date);
+    };
+  
+     // Rebuild the table using the filtered data
+    // @NOTE: If no date was entered, then filteredData will
+    // just be the original tableData.
+    buildTable(filteredData);
+  };
+
+  //Listen for the Event
+  //aspect of D3.js is that it can listen for events that occur on a webpage, such as a button click
+  // Attach an event to listen for the form button
+  d3.selectAll("#filter-btn").on("click", handleClick);
+
+  //Build the Final Table when the page loads
+  buildTable(tableData);
+
+
