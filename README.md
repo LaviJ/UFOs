@@ -29,7 +29,7 @@ Filter on date, city, state, country : Further filtering the data on country, ga
 Filter on date, city, state, country & shape : The data was filtered further on shape in the below image.
 ![Date-City-State-country-shape Filter](Analysis/UFO_filter_date_city_state_country_shape.png) 	
 
-The filtration can be done only on certain parameters only, it doesn’t have to have the filtration input in all cells, as we have a written a code to delete the filter in case of no input value in the app.js and below is the code for the same
+The filtration can be done on any parameters, it doesn’t need to have the filtration input in all cells, as we have also written a code to delete the filter in case there is no input value. Below is the code for the same :
 ![Delete filter](Analysis/If_else_code.png)
 
 ## 3. Summary:
