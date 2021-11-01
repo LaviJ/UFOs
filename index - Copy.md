@@ -1,3 +1,9 @@
+![image-20211027151532421](C:\Users\lavin\AppData\Roaming\Typora\typora-user-images\image-20211027151532421.png)
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,14 +44,15 @@
         <div class="col-md-8">
             <p>
                 Are we alone in the universe? For millennia, humans have turned to the sky to answer this question. Now, thanks to research generously funded by W. Avy, a UFO-enthusiast and amateur ufologist, we can supplement our sky-searching with data analysis.<br><br>"The release of this analysis is well-timed: It coincides with the celebration of World UFO Day, which is a moment for ufologists around the world to connect, relax, and sample a range of UFO-themed snacks," said Dr. Ursula F. Olivier, the world's preeminent expert on circular sightings. "Citizen-scientists can be especially helpful in both cataloguing sightings—which is hugely helpful for us in our search for aliens—and in helping us celebrate the work that has already been done, such as this data visualization project, which will help us raise awareness of the ubiquity of sightings!"<br><br>Not everyone is ready to celebrate, however. Local CEO and vocal anti-alien activist V. Isualize reached out to our reporters to go on record as firmly opposed to any attempts to provide access to this data. "If there are aliens, they certainly would like to be left alone," she stated, before directing us to the Leave Aliens Alone (LAA) community engagement initiative she founded and funds.<br><br>So what do YOU think? Are we alone in the universe? Are aliens trying to contact us, or do they want to be left alone? Dig through the data yourself, and let us know what you see.
-  
+
+
             </p>
         </div>
     </div>
 
 <!--Create the Table Filter-->
 <!--Creating another fluid container-->
-    <div class="container-fluid">
+    <div class="container-fluid"><!---->
         <div class="row">
             <div class="col-md-3">
                 <!--add a form tag, then build the form by nesting additional elements-->
@@ -62,47 +69,18 @@
                             <!--code will look for text to be input,date to search, code will look for when the button is clicked-->
                             <input type="text" placeholder="1/10/2010" id="datetime" />
                         </li>
-                        
+
+​                    
+
                         <li class="list-group-item bg-dark">
-                            <!--add the label tag-->
-                            <!--label represents a caption for the date item-->
-                            <label for="city">Enter a City</label>
-                            <!--code will look for text to be input,date to search, code will look for when the button is clicked-->
-                            <input type="text" placeholder="city" id="city" />
-                        </li>
-                        
-                        <li class="list-group-item bg-dark">
-                            <!--add the label tag-->
-                            <!--label represents a caption for the date item-->
-                            <label for="state">Enter a State</label>
-                            <!--code will look for text to be input,date to search, code will look for when the button is clicked-->
-                            <input type="text" placeholder="state" id="state" />
-                        </li>
-                           
-                        <li class="list-group-item bg-dark">
-                            <!--add the label tag-->
-                            <!--label represents a caption for the date item-->
-                            <label for="country">Enter a Country</label>
-                            <!--code will look for text to be input,date to search, code will look for when the button is clicked-->
-                            <input type="text" placeholder="country" id="country" />
-                        </li>
-                           
-                        <li class="list-group-item bg-dark">
-                            <!--add the label tag-->
-                            <!--label represents a caption for the date item-->
-                            <label for="shape">Enter a Shape</label>
-                            <!--code will look for text to be input,date to search, code will look for when the button is clicked-->
-                            <input type="text" placeholder="shape" id="shape" />
-                        </li>
-                        
-                        <!-- <li class="list-group-item bg-dark">
                         <!--add a button tag with a few additional attributes: the id we defined in our JavaScript code (#filter-btn), a type, and a class-->
-                        <!--<button id="filter-btn" type="button" class="btn btn-dark">Filter Table</button>
-                        <!--</li>-->
+                            <button id="filter-btn" type="button" class="btn btn-dark">Filter Table</button>
+                        </li>
                     </ul>
-    
-    
-    
+
+
+​    
+​    
 
                   </form>
             </div>
@@ -125,7 +103,7 @@
                 <tbody></tbody>
                 </table>
             </div>
-
+    
             </div>
         </div>
     </div>
@@ -139,5 +117,76 @@
 
   
 
+
 </body>
 </html>
+
+<u>*File name : app.js*</u>
+
+//Mod 11.2.4 Storyboarding
+
+// import the data from data.js
+const tableData = data;
+
+// Reference the HTML table using d3
+var tbody = d3.select("tbody");
+
+//11.5.1 Introduction to Dynamic Tables
+
+function buildTable(data) {
+    //Clearing the existing data creates a fresh table in which we can insert data
+    tbody.html("");
+
+
+ //11.5.2  Add forEach to Your Table
+    //incorporate a forEach function that loops through our data array, and then adds rows of data to the table
+    data.forEach((dataRow) => {
+        //create a variable that will append a row to the HTML table body
+        let row = tbody.append("tr");
+
+        //Loop through each field in the dataRow argument.
+        Object.values(dataRow).forEach((val) => {
+            //append each value of the object to a cell in the table
+            let cell = row.append("td");
+            //add the values
+            cell.text(val);
+            }
+        );
+    });
+
+}
+
+// Mod 11.5.3 Add Filters
+//handling what to do after an input is given such as button click
+function handleClick() {
+    // Grab the datetime value from the filter
+    let date = d3.select("#datetime").property("value");
+    let filteredData = tableData;
+
+     // Check to see if a date was entered and filter the
+    // data using that date.
+    if (date) {
+      // Apply `filter` to the table data to only keep the
+      // rows where the `datetime` value matches the filter value
+      filteredData = filteredData.filter(row => row.datetime === date);
+    };
+      
+     // Rebuild the table using the filtered data
+    // @NOTE: If no date was entered, then filteredData will
+    // just be the original tableData.
+    buildTable(filteredData);
+
+  };
+
+  //Listen for the Event
+  //aspect of D3.js is that it can listen for events that occur on a webpage, such as a button click
+  // Attach an event to listen for the form button
+  d3.selectAll("#filter-btn").on("click", handleClick);
+
+  //Build the Final Table when the page loads
+  buildTable(tableData);
+
+
+
+
+
